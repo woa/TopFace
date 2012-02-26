@@ -1,0 +1,353 @@
+html, body {
+	margin: 0px;
+	padding: 0px;
+	font: 9pt Tahoma;
+	height: auto;
+	min-height: 100%;
+}
+
+.fl {float: left;}
+.fr {float: right;}
+.cb {clear: both;}
+
+#fixer {
+	width: 100%;
+	height: auto;
+	min-height: 100%;
+}
+
+#main {
+	margin: 0px auto;
+	width: 821px;
+	border: 1px solid #000;
+	border-top: 0px;
+	border-bottom: 0px;
+	background: #FFF;
+}
+
+#user_list {
+	width: 219px;
+	background: #FFF;
+	border-right: 1px solid #dde2ed;
+	-moz-box-shadow: 0px 0px 16px #DDE2ED;
+    -webkit-box-shadow: 0px 0px 16px #DDE2ED;
+    box-shadow: 0px 0px 16px #DDE2ED;
+    overflow: hidden;
+    position: fixed;
+    top: 0px;
+}
+
+#user_list .user {
+	height: 30px;
+	padding: 10px;
+}
+
+#user_list .user:hover {
+	cursor: pointer;
+}
+
+#user_list .drop_dialog {
+	display: none;
+	margin: 10px 8px;
+	
+}
+
+#user_list .user:hover .drop_dialog {
+	display: block;
+}
+
+#user_list .fl {
+	margin-top: 10px;
+	line-height: 10px;
+}
+
+#user_list img {
+	border-radius:4px;
+	-moz-border-radius:4px;
+	-webkit-border-radius:4px;
+}
+
+#user_list .fl img {
+	margin-right: 5px;
+}
+
+#user_list .user_avatar {
+	width: 30px;
+	height: 30px;
+	margin-top: 0px;
+	background: url(../img/loader.gif) no-repeat;
+	background-position: 7px 7px;
+}
+
+#chat { 
+	width: 601px;
+}
+
+#chat .dialog_user {
+	background: #e4ecf7;
+	border-bottom: 1px solid #d0d9e3;
+	position: fixed;
+	width: 601px;
+	top: 0px;
+}
+
+#chat .dialog_write {
+	position: fixed;
+	width: 561px;
+	bottom: 0px;
+	height: 170px;
+	padding: 10px 20px;
+	font-size: 8.25pt;
+}
+
+#chat .user_avatar img {
+	width: 81px;
+	height: 81px;
+	background: url(../img/loader.gif) no-repeat;
+	background-position: 7px 7px;
+	margin: 10px;
+	margin-left: 20px;
+	border-bottom: 1px solid #FFF;
+	border-radius:6px;
+	-moz-border-radius:6px;
+	-webkit-border-radius:6px;
+}
+
+#chat .user_info, #chat .user_action {
+	margin-top: 16px;
+	line-height: 27px;
+}
+
+#chat .user_action {
+	margin-right: 20px;
+}
+
+#chat .user_info a {
+	font-size: 20px;
+	color: #1270b8;
+}
+
+#chat .user_action a, #chat .dialog_write a, .tooltip a {
+	font-size: 9pt;
+	color: #1270b8;
+	text-decoration: none;
+	border-bottom: 1px dotted #1270b8;
+}
+
+#chat .dialog_write a {
+	font-size: 8.25pt;
+}
+
+#chat .dialog_write img {
+	float: left;
+	margin-right: 5px;
+	margin-top: 1px;
+}
+
+#chat .user_action a:hover, #chat .user_info a:hover, #chat .dialog_write a:hover, .tooltip a:hover {
+	color: #0d4875;
+	text-decoration: underline;
+}
+
+#chat .user_action a:hover, #chat .dialog_write a:hover, .tooltip a:hover {
+	text-decoration: none;
+}
+
+#chat .dialog_messages {
+	padding: 20px;
+	margin-top: 102px;
+}
+
+#chat .no_messages {
+	background: #f1f5fb;
+}
+
+#user_list .active {
+	background: -moz-linear-gradient(#5986bd, #6699d6);
+	background: -ms-linear-gradient(#5986bd, #6699d6);
+	background: -o-linear-gradient(#5986bd, #6699d6);
+	background: -webkit-linear-gradient(#5986bd, #6699d6);
+	
+	-moz-box-shadow: 0px 1px 5px rgba(0,0,0,0.4) inset;
+    -webkit-box-shadow: 0px 1px 5px rgba(0,0,0,0.4) inset;
+    box-shadow: 0px 1px 5px rgba(0,0,0,0.4) inset;
+    
+    color: #FFF;
+}
+
+.new_msg_cnt {
+	background: #f47600;
+	border-top: 1px solid #d86200;
+	border-left: 1px solid #e96e00;
+	border-right: 1px solid #e96e00;
+	-moz-box-shadow: 0px 0px 3px #DDE2ED inline;
+    -webkit-box-shadow: 0px 0px 3px #DDE2ED inline;
+    box-shadow: 0px 0px 3px #DDE2ED inline;
+    border-radius:6px;
+	-moz-border-radius:6px;
+	-webkit-border-radius:6px;
+	font-size: 9px;
+	color: #FFF;
+	padding: 0 4px;
+	margin: 10px 7px;
+	margin-left: 0px;
+}
+
+.active .new_msg_cnt {
+	background: #FFF;
+	border: 0px;
+	border-bottom: 1px solid #3d5b80;
+    border-radius:6px;
+	-moz-border-radius:6px;
+	-webkit-border-radius:6px;
+	color: #f47600;
+}
+
+textarea {
+	width: 537px;
+	height: 80px;
+	border: 0px;
+	margin: 10px 0;
+	background: -moz-linear-gradient(#f5f5f5, #f9f9f9);
+	background: -ms-linear-gradient(#f5f5f5, #f9f9f9);
+	background: -o-linear-gradient(#f5f5f5, #f9f9f9);
+	background: -webkit-linear-gradient(#f5f5f5, #f9f9f9);
+	box-shadow: 0px 1px 4px rgba(0,0,0,0.3) inset;
+	-moz-box-shadow: 0px 1px 4px rgba(0,0,0,0.3) inset;
+    -webkit-box-shadow: 0px 1px 4px rgba(0,0,0,0.3) inset;
+	font: 9pt Tahoma;
+	padding: 10px;
+}
+
+.send_gift, .send_star {
+	margin-top: 11px;
+	margin-left: 30px;
+}
+
+.send_gift img, .send_star img {
+	margin-top: 0px !important;
+}
+
+.send_gift a, .send_star a{
+	font-size: 9pt !important;
+}
+
+.button_blue button {
+	border: 0px;
+	font-size: 9pt Tahoma;
+	color: #FFF;
+	
+	text-align: center;
+  	border: 0;
+  
+	margin: 4px 0px;
+	cursor: pointer;
+	outline: none;
+	height: 29px;
+	width: 94px;
+	
+	border-radius: 3px;
+    -moz-border-radius: 3px;
+    -khtml-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    
+    text-shadow: 0px -1px 1px rgba(0,0,0,0.25);
+
+    background: -moz-linear-gradient(#8996ab, #5e6f8d);
+	background: -ms-linear-gradient(#8996ab, #5e6f8d);
+	background: -o-linear-gradient(#8996ab, #5e6f8d);
+	background: -webkit-linear-gradient(#8996ab, #5e6f8d);
+    
+}
+
+.button_blue button:hover {
+	background: -moz-linear-gradient(#99a6bc, #5e6f8d);
+	background: -ms-linear-gradient(#99a6bc, #5e6f8d);
+	background: -o-linear-gradient(#99a6bc, #5e6f8d);
+	background: -webkit-linear-gradient(#99a6bc, #5e6f8d);
+}
+
+.button_blue button:active {
+	background: -moz-linear-gradient(#99a6bc, #5e6f8d);
+	background: -ms-linear-gradient(#99a6bc, #5e6f8d);
+	background: -o-linear-gradient(#99a6bc, #5e6f8d);
+	background: -webkit-linear-gradient(#99a6bc, #5e6f8d);
+	text-shadow: 0px 0px 1px rgba(0,0,0,0.8);
+}
+
+
+.tooltip {
+	display: none;
+	position: fixed;
+	bottom: 315px;
+	left: 47.8%;
+	z-index: 999;
+	width: 520px;
+	margin-left: -127px;
+	padding: 10px;
+	opacity: 1;
+	background-color: white;
+	border-radius: 4px;
+	-webkit-box-shadow: 0 1px 3px rgba(0,0,0,.19);
+	height: 75px;
+}
+
+.tooltip::before {
+	border-top-color: #CCC;
+	bottom: -11px;
+}
+
+.tooltip::before {
+	content: "";
+	position: absolute;
+	z-index: 1000;
+	bottom: -16px;
+	left: 50%;
+	margin-left: -10px;
+	border-top: 16px solid rgba(0, 0, 0, .06);
+	border-left: 16px solid transparent;
+	border-right: 0px solid transparent;
+	border-bottom: 0;
+}
+
+.tooltip::after {
+	content: "";
+	position: absolute;
+	z-index: 1000;
+	bottom: -11px;
+	left: 50%;
+	margin-left: -8px;
+	border-top: 12px solid white;
+	border-left: 12px solid transparent;
+	border-right: 0px solid transparent;
+	border-bottom: 0;
+}
+
+.tooltip h1 {
+	font-size: 17px;
+	font-weight: normal;
+	line-height: 10px;
+}
+
+.tooltip .fr, .tooltip .fl {
+	margin-top: 8px;
+}
+
+.tooltip img {
+	margin: 2px 5px;
+}
+
+.tooltip .fr {
+	cursor: pointer;
+}
+
+.tooltip .fr:hover a {
+	color: #0d4875;
+}
+
+.tooltip .text {
+	margin-top: 30px;
+	text-align: center;
+	color: #404040;
+	opacity: 0.3;
+}

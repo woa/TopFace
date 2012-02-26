@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	<script src="http://code.jquery.com/jquery-latest.js"></script>
+	<script src="js/main.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/main.css" />
+	<script type="text/javascript">
+		$(document).ready(function() {
+			Sys.resize();
+			Dialog.init();
+		});
+	</script>
+</head>
+<body>
+	<div id="fixer">
+		<div id="main">
+			<div class="fl" id="user_list">
+				No Users
+			</div>
+			
+			<div class="fr" id="chat">
+				<div style="padding: 10px;">No msg opend</div>
+			</div>
+			
+			<div class="cb"></div>
+		</div>
+		<div class="cb"></div>
+	</div>
+	<div class="tooltip" id="tooltip">
+		<h1>Начни с интересной фразы</h1>
+		Произведи хорошее впечатление<br>
+		<div class="fl"><a href="#" onclick="Tooltip.paste();">«<span id="compliment"></span>»</a></div>
+		<div class="fr" onclick="Tooltip.gen();">
+			<div class="fl"><img src="img/reload.png"></div>
+			<div class="fl"><a href="#" onclick="return false">Другой комплимент</a></div>
+			<div class="cb"></div>
+		</div>
+		<div class="cb"></div>
+		<div class="text">
+			Напиши первое сообщение
+		</div>
+	</div>
+</body>
+</html>
