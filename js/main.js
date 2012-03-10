@@ -18,10 +18,9 @@ var Sys = {
 		$("#user_list").css("min-height", dh+"px");
 		$("#user_list").css("max-height", dh+"px");
 		$("#chat").css("min-height", dh+"px");
-		
 	},
 	cw : function (text) {
-		if (console) {
+		if (typeof(console) != 'undefined') {
 			if (console.info) {
 				console.info("SYSTEM: "+text);
 			} else if (console.log) {
@@ -35,6 +34,78 @@ var Sys = {
 			cnt++;
 		}
 		return cnt;
+	},
+	time : function (t) {
+		var d = new Date(t*1000);
+		var h = d.getHours();
+		var m = d.getMinutes();
+		
+		if (h < 10) h = '0'+h;
+		if (m < 10) m = '0'+m;
+		
+		t = h+":"+m;
+		
+		return t;
+	},
+	user_width: 0,
+	mid_width : 40,
+	getWidth : function (uid) {
+		if (Sys.user_width == 0) {
+			Sys.user_width = $("#user_width").width();
+			if (Sys.user_width < this.mid_width) Sys.user_width = this.mid_width;
+		}
+		var width = $("#user_login_"+uid).width();
+		if (width < Sys.user_width) width = Sys.user_width;
+		return width;
+	}
+};
+
+var Modal = {
+	show : function (type) {
+	
+		var html = '';
+		
+		var rn = new RussianName('', Users[Dialog.main.uid].first_name);
+		var pred = rn.fullName(rn.gcaseDat);
+		
+		if (type == 1) {
+			html = 
+				'<div id="modal" style="height: '+(Sys.dh-103)+'px;">'+
+				'	<div class="box votes">'+
+				'		<div class="main">'+
+				'			<div class="close" onclick="Modal.close();"></div>'+
+				'			Отправьте '+pred+ ' оценку<br>'+
+				'			<div class="stars">'+
+				'				<div class="fl star">1</div>'+
+				'				<div class="fl star">2</div>'+
+				'				<div class="fl star">3</div>'+
+				'				<div class="fl star">4</div>'+
+				'				<div class="fl star">5</div>'+
+				'				<div class="fl star">6</div>'+
+				'				<div class="fl star">7</div>'+
+				'				<div class="fl star">8</div>'+
+				'				<div class="fl star">9</div>'+
+				'				<div class="fl star">10</div>'+
+				'				<div class="cb"></div>'+
+				'			</div>'+
+				'		</div>'+
+				'	</div>'+
+				'</div>';
+		}
+	
+		$("#chat").append(html);
+		
+		$("#modal").fadeIn(400);
+		
+	},
+	close : function () {
+		$("#modal").fadeOut(400, function () {$(this).remove();});
+	}
+};
+
+var Votes = {
+	show : function () {
+		Modal.show(1);
 	}
 };
 
@@ -51,6 +122,7 @@ var Dialog = {
 			Templates.usersList(DialogID, v.uid);
 			DialogID++;
 		});
+		$( "#user_list" ).sortable();
 	},
 	select : function (did, uid) {
 		$("#user_list .active").removeClass("active");
@@ -79,9 +151,11 @@ var Dialog = {
 Dialog.main = {
 	opened : {},
 	did : 0,
+	uid : 0,
 	init : function (did, uid) {
-		
+
 		Dialog.main.did = did;
+		Dialog.main.uid = uid;
 		
 		if (Sys.olength(this.opened) == 0) {
 			Templates.clean.dialog();
@@ -99,12 +173,11 @@ Dialog.main = {
 				'<div id="temp_dialog_'+did+'_'+uid+'" class="temp_dialog">'+
 					$("#temp_dialog_"+did+"_"+uid).html()+
 				'</div>';
-				
+			var old_msg = $("#dialog_text_"+did).val();
 			$("#temp_dialog_"+did+"_"+uid).remove();
 			$("#chat").prepend(temp);
-			
+			$("#dialog_text_"+did).val(old_msg); /*fix for textarea*/
 			$("#temp_dialog_"+did+"_"+uid).show();
-			
 			Sys.olength(Temp.dialogs[did].messages) ? Tooltip.hide() : Tooltip.show(uid);
 		}
 	}
@@ -148,6 +221,14 @@ var Tooltip = {
 	}
 };
 
+var Message = {
+	remove : function (did, k, mid) {
+		$("#msg_"+did+"_"+mid+" .msg").html("Сообщение удалено");
+		$("#msg_"+did+"_"+mid).addClass("dropped");
+		delete Temp.dialogs[did].messages[k];
+	}
+};
+
 var Templates = {
 	usersList : function(did, uid) {
 		
@@ -168,7 +249,7 @@ var Templates = {
 			'		<img src="img/'+on+'.png">'+
 			'	</div>'+
 			'	<div class="fl">'+
-			'		'+e.first_name+', '+age+' '+
+			'		<span id="user_login_'+uid+'">'+e.first_name+'</span>, '+age+' '+
 			'	</div>'+
 			'	<div class="fr">'+
 			'		<img src="'+e.photo_rec+'" class="user_avatar">'+
@@ -218,9 +299,41 @@ var Templates = {
 	},
 	dialogMessages : function (did, uid) {
 		var html = '';
+		var d;
+		
+		var width = Sys.getWidth(uid);
+		var mWidth = 491-width;
 		$.each(Temp.dialogs[did].messages, function (k, v) {
-			html += 
-			'';
+			if (v && v.mid) {
+				html += '<div id="msg_'+did+'_'+v.mid+'" class="message">';
+				
+				if (v.type == 1) {
+					html += 
+						'<div class="user_name fl'+(v.out ? " out" : "")+'" style="width: '+width+'px;">'+
+							'<a href=#>'+
+								(v.out ? Temp.userInfo.first_name : Users[uid].first_name)+
+							'</a>'+
+						'</div>'+
+						'<div class="msg fl" style="width: '+mWidth+'px;">'+
+							v.text+
+						'</div>'+
+						'<div class="fl">'+
+						'	<img src="img/del.png" class="drop_dialog" onMouseDown="event.cancelBubble = true; Message.remove('+did+', '+k+', '+v.mid+'); return false;">'+
+						'</div>'+
+						'<div class="fl time">'+
+							Sys.time(v.date)+
+						'</div>'+
+						'<div class="fl drop">'+
+						'	<img src="img/drop.png">'+
+						'</div>';
+					'';
+				}
+				
+				html += 
+					'	<div class="cb"></div>'+
+					'</div>';
+			}
+			
 		});
 		return html;
 	},
@@ -231,12 +344,14 @@ var Templates = {
 		var messages = Sys.olength(Temp.dialogs[did].messages);
 		messages ? Tooltip.hide() :  Tooltip.show(uid);
 		
+		$("#dialog_"+did+"_"+uid+" .new_msg_cnt").fadeOut("slow", function (){$(this).remove();});
+		
 		html = 
 			'<div id="temp_dialog_'+did+'_'+uid+'" class="temp_dialog">'+
 			
 			Templates.dialogUser(uid) +
-			/*794px*/
-			'	<div class="dialog_messages'+(messages ? "" : " no_messages")+'" style="min-height: '+(Sys.dh-142)+'px;">'+
+			/*814px*/
+			'	<div class="dialog_messages'+(messages ? "" : " no_messages")+'" style="min-height: '+(Sys.dh-122)+'px;">'+
 			
 			((messages) ? Templates.dialogMessages(did, uid) : "") + 
 			
@@ -255,7 +370,7 @@ var Templates = {
 			'			</div>'+
 			'			<div class="fl send_star">'+
 			'				<img src="img/star.png">'+
-			'				<a href=#>Отправить оценку</a>'+
+			'				<a href=# onclick="Votes.show();return false;">Отправить оценку</a>'+
 			'			</div>'+
 			'		</form>'+
 			'	</div>'+
@@ -306,10 +421,12 @@ var Compliments = [
 	]
 ];
 
-var Temp = {"userInfo":{"uid":2893955,"first_name":"Андрей","last_name":"Кедров","photo_medium_rec":"http:\/\/cs10458.vk.com\/u2893955\/d_c75e40b7.jpg","sex":2,"photo":"http:\/\/cs10458.vk.com\/u2893955\/e_839d8b8f.jpg"},"friends":[{"uid":175,"first_name":"Михаил","last_name":"Захаренков","photo_medium_rec":"http:\/\/cs9729.vk.com\/u00175\/d_9f1c3f8d.jpg","photo_rec":"http:\/\/cs9729.vk.com\/u00175\/e_e3a2558e.jpg","sex":2,"can_post":1,"online":0},{"uid":59219,"first_name":"Костя","last_name":"Колесников","photo_medium_rec":"http:\/\/cs10493.vk.com\/u59219\/d_8030d6c1.jpg","photo_rec":"http:\/\/cs10493.vk.com\/u59219\/e_59cd59bf.jpg","sex":2,"can_post":1,"online":0},{"uid":62312,"first_name":"Ivan","last_name":"Nikulin","photo_medium_rec":"http:\/\/cs10732.vk.com\/u62312\/d_6b53edde.jpg","photo_rec":"http:\/\/cs10732.vk.com\/u62312\/e_058659e9.jpg","sex":2,"can_post":1,"online":0},{"uid":66748,"first_name":"Олег","last_name":"Илларионов","photo_medium_rec":"http:\/\/cs4460.vk.com\/u66748\/d_ea567c89.jpg","photo_rec":"http:\/\/cs4460.vk.com\/u66748\/e_af41c356.jpg","sex":2,"can_post":0,"online":0,"lists":[27]},{"uid":76712,"first_name":"Натали","last_name":"Алдошина","photo_medium_rec":"http:\/\/cs10613.vk.com\/u76712\/d_8b75f7df.jpg","photo_rec":"http:\/\/cs10613.vk.com\/u76712\/e_6650c99e.jpg","sex":1,"can_post":1,"online":0,"lists":[27]},{"uid":97713,"first_name":"Илья","last_name":"Павлов","photo_medium_rec":"http:\/\/cs11020.vk.com\/u97713\/d_81783255.jpg","photo_rec":"http:\/\/cs11020.vk.com\/u97713\/e_6d24eedb.jpg","sex":2,"can_post":1,"online":0,"lists":[27]},{"uid":103989,"first_name":"Михаил","last_name":"Носов","photo_medium_rec":"http:\/\/cs9215.vk.com\/u103989\/d_c3effe7c.jpg","photo_rec":"http:\/\/cs9215.vk.com\/u103989\/e_e0d7b4d9.jpg","sex":2,"can_post":1,"online":0,"lists":[27]},{"uid":106079,"first_name":"Павел","last_name":"Мишин","photo_medium_rec":"http:\/\/cs4301.vk.com\/u106079\/d_fa7956ba.jpg","photo_rec":"http:\/\/cs4301.vk.com\/u106079\/e_76288c82.jpg","sex":2,"can_post":0,"online":0,"lists":[27]},{"uid":169003,"first_name":"Глеб","last_name":"Климов","photo_medium_rec":"http:\/\/cs9783.vk.com\/u169003\/d_8018e98e.jpg","photo_rec":"http:\/\/cs9783.vk.com\/u169003\/e_5809d4f7.jpg","sex":2,"can_post":1,"online":1},{"uid":326683,"first_name":"Сергей","last_name":"Черный","photo_medium_rec":"http:\/\/cs5144.vk.com\/u326683\/d_68786c94.jpg","photo_rec":"http:\/\/cs5144.vk.com\/u326683\/e_333b5163.jpg","sex":2,"can_post":1,"online":1},{"uid":418841,"first_name":"Никита","last_name":"Щов","photo_medium_rec":"http:\/\/cs9934.vk.com\/u418841\/d_51c645f2.jpg","photo_rec":"http:\/\/cs9934.vk.com\/u418841\/e_bfc63d0d.jpg","sex":2,"can_post":1,"online":0},{"uid":463377,"first_name":"Денис","last_name":"Пешехонов","photo_medium_rec":"http:\/\/cs11436.vk.com\/u463377\/d_86f550e6.jpg","photo_rec":"http:\/\/cs11436.vk.com\/u463377\/e_8391d68d.jpg","sex":2,"can_post":1,"online":1},{"uid":1198614,"first_name":"Кирилл","last_name":"Александров","photo_medium_rec":"http:\/\/cs4143.vk.com\/u1198614\/d_8cf0d716.jpg","photo_rec":"http:\/\/cs4143.vk.com\/u1198614\/e_dd8148c1.jpg","sex":1,"can_post":1,"online":0}]};
+var Temp = {"userInfo":{"uid":2893955,"first_name":"Андрей","last_name":"Кедров","photo_medium_rec":"http:\/\/cs10458.vk.com\/u2893955\/d_c75e40b7.jpg","sex":2,"photo":"http:\/\/cs10458.vk.com\/u2893955\/e_839d8b8f.jpg"},"friends":[{"uid":175,"first_name":"Михаилыыы","last_name":"Захаренков","photo_medium_rec":"http:\/\/cs9729.vk.com\/u00175\/d_9f1c3f8d.jpg","photo_rec":"http:\/\/cs9729.vk.com\/u00175\/e_e3a2558e.jpg","sex":2,"can_post":1,"online":0},{"uid":59219,"first_name":"Костя","last_name":"Колесников","photo_medium_rec":"http:\/\/cs10493.vk.com\/u59219\/d_8030d6c1.jpg","photo_rec":"http:\/\/cs10493.vk.com\/u59219\/e_59cd59bf.jpg","sex":2,"can_post":1,"online":0},{"uid":62312,"first_name":"Ivan","last_name":"Nikulin","photo_medium_rec":"http:\/\/cs10732.vk.com\/u62312\/d_6b53edde.jpg","photo_rec":"http:\/\/cs10732.vk.com\/u62312\/e_058659e9.jpg","sex":2,"can_post":1,"online":0},{"uid":66748,"first_name":"Олег","last_name":"Илларионов","photo_medium_rec":"http:\/\/cs4460.vk.com\/u66748\/d_ea567c89.jpg","photo_rec":"http:\/\/cs4460.vk.com\/u66748\/e_af41c356.jpg","sex":2,"can_post":0,"online":0,"lists":[27]},{"uid":76712,"first_name":"Натали","last_name":"Алдошина","photo_medium_rec":"http:\/\/cs10613.vk.com\/u76712\/d_8b75f7df.jpg","photo_rec":"http:\/\/cs10613.vk.com\/u76712\/e_6650c99e.jpg","sex":1,"can_post":1,"online":0,"lists":[27]},{"uid":97713,"first_name":"Илья","last_name":"Павлов","photo_medium_rec":"http:\/\/cs11020.vk.com\/u97713\/d_81783255.jpg","photo_rec":"http:\/\/cs11020.vk.com\/u97713\/e_6d24eedb.jpg","sex":2,"can_post":1,"online":0,"lists":[27]},{"uid":103989,"first_name":"Михаил","last_name":"Носов","photo_medium_rec":"http:\/\/cs9215.vk.com\/u103989\/d_c3effe7c.jpg","photo_rec":"http:\/\/cs9215.vk.com\/u103989\/e_e0d7b4d9.jpg","sex":2,"can_post":1,"online":0,"lists":[27]},{"uid":106079,"first_name":"Павел","last_name":"Мишин","photo_medium_rec":"http:\/\/cs4301.vk.com\/u106079\/d_fa7956ba.jpg","photo_rec":"http:\/\/cs4301.vk.com\/u106079\/e_76288c82.jpg","sex":2,"can_post":0,"online":0,"lists":[27]},{"uid":169003,"first_name":"Глеб","last_name":"Климов","photo_medium_rec":"http:\/\/cs9783.vk.com\/u169003\/d_8018e98e.jpg","photo_rec":"http:\/\/cs9783.vk.com\/u169003\/e_5809d4f7.jpg","sex":2,"can_post":1,"online":1},{"uid":326683,"first_name":"Сергей","last_name":"Черный","photo_medium_rec":"http:\/\/cs5144.vk.com\/u326683\/d_68786c94.jpg","photo_rec":"http:\/\/cs5144.vk.com\/u326683\/e_333b5163.jpg","sex":2,"can_post":1,"online":1},{"uid":418841,"first_name":"Никита","last_name":"Щов","photo_medium_rec":"http:\/\/cs9934.vk.com\/u418841\/d_51c645f2.jpg","photo_rec":"http:\/\/cs9934.vk.com\/u418841\/e_bfc63d0d.jpg","sex":2,"can_post":1,"online":0},{"uid":463377,"first_name":"Денис","last_name":"Пешехонов","photo_medium_rec":"http:\/\/cs11436.vk.com\/u463377\/d_86f550e6.jpg","photo_rec":"http:\/\/cs11436.vk.com\/u463377\/e_8391d68d.jpg","sex":2,"can_post":1,"online":1},{"uid":1198614,"first_name":"Кирилл","last_name":"Александров","photo_medium_rec":"http:\/\/cs4143.vk.com\/u1198614\/d_8cf0d716.jpg","photo_rec":"http:\/\/cs4143.vk.com\/u1198614\/e_dd8148c1.jpg","sex":1,"can_post":1,"online":0}]};
 
 Temp.dialogs = {
 	1 : {
+		uid : 175,
+		unread : 0,
 		messages : [
 			{
 				text : 'привет как дела',
@@ -346,7 +463,7 @@ Temp.dialogs = {
 			{
 				text : 'привет',
 				date : 1268238858,
-				mid : 2,
+				mid : 5,
 				out : 1,
 				read_state : 1,
 				type : 1
@@ -354,7 +471,7 @@ Temp.dialogs = {
 			{
 				text : 'привет',
 				date : 1268238958,
-				mid : 2,
+				mid : 6,
 				out : 1,
 				read_state : 1,
 				type : 1
@@ -362,13 +479,12 @@ Temp.dialogs = {
 			{
 				text : 'привет',
 				date : 1268239058,
-				mid : 2,
+				mid : 7,
 				out : 1,
 				read_state : 1,
 				type : 1
 			}
-		],
-		unread : 0
+		]
 	},
 	2 : {
 		messages : {

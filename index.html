@@ -1,14 +1,22 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+	<meta http-equiv="X-UA-Compatible" content="IE=9" />
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 	<script src="http://code.jquery.com/jquery-latest.js"></script>
+	<script src="http://agalkin.ru/js/Name.js"></script>
+	<script src="http://jqueryui.com/ui/jquery.ui.core.js"></script>
+	<script src="http://jqueryui.com/ui/jquery.ui.widget.js"></script>
+	<script src="http://jqueryui.com/ui/jquery.ui.mouse.js"></script>
+	<script src="http://jqueryui.com/ui/jquery.ui.sortable.js"></script>
+	
 	<script src="js/main.js"></script>
-	<link rel="stylesheet" type="text/css" href="css/main.css" />
+	<link rel="stylesheet" type="text/css" href="css/main2.css" />
 	<script type="text/javascript">
 		$(document).ready(function() {
 			Sys.resize();
 			Dialog.init();
+			$("body").prepend('<span id="self_login">'+Temp.userInfo.first_name+'</span>');
 		});
 	</script>
 </head>

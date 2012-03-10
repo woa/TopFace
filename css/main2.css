@@ -35,9 +35,6 @@ html, body {
     overflow: hidden;
     position: fixed;
     top: 0px;
-
-	behavior: url(PIE.htc);
-    
 }
 
 #user_list .user {
@@ -47,6 +44,7 @@ html, body {
 
 #user_list .user:hover {
 	cursor: pointer;
+	background-color: #fafafb;
 }
 
 .drop_dialog {
@@ -63,6 +61,20 @@ html, body {
 
 #user_list .user:hover .drop_dialog, .message:hover .drop_dialog  {
 	visibility: visible;
+	cursor: pointer;
+}
+
+.message.dropped:hover .drop_dialog {
+	visibility: hidden !important;
+	cursor: normal !important;
+}
+
+.message.dropped .drop img {
+	visibility: visible !important;
+}
+
+.message.dropped .msg {
+	color: #a6a6a6;
 }
 
 #user_list .fl {
@@ -76,7 +88,6 @@ html, body {
 	-webkit-border-radius:4px;
 	
 	behavior: url(ie-css3.htc);
-	behavior: url(border-radius.htc);
 }
 
 #user_list .fl img {
@@ -93,6 +104,7 @@ html, body {
 
 #chat { 
 	width: 601px;
+	position: relative;
 }
 
 #chat .dialog_user {
@@ -123,7 +135,7 @@ html, body {
 	border-radius:6px;
 	-moz-border-radius:6px;
 	-webkit-border-radius:6px;
-	behavior: url(border-radius.htc);
+	
 	behavior: url(ie-css3.htc);
 }
 
@@ -177,10 +189,12 @@ html, body {
 }
 
 #user_list .active {
-	background: -moz-linear-gradient(#5986bd, #6699d6);
-	background: -ms-linear-gradient(#5986bd, #6699d6);
-	background: -o-linear-gradient(#5986bd, #6699d6);
-	background: -webkit-linear-gradient(#5986bd, #6699d6);
+	background: #5986bd;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#5986bd', endColorstr='#6699d6');
+	background: -webkit-linear-gradient(#5986bd, #6699d6); 
+	background: -moz-linear-gradient(top,  #5986bd,  #6699d6);  
+	background: -o-linear-gradient(top,  #5986bd,  #6699d6); 
+	background: -ms-linear-gradient(top,  #5986bd,  #6699d6);
 	
 	-moz-box-shadow: 0px 1px 5px rgba(0,0,0,0.4) inset;
     -webkit-box-shadow: 0px 1px 5px rgba(0,0,0,0.4) inset;
@@ -205,8 +219,7 @@ html, body {
 	padding: 0 4px;
 	margin: 10px 7px;
 	margin-left: 0px;
-	behavior: url(ie-css3.htc);
-	behavior: url(border-radius.htc);
+	
 }
 
 .active .new_msg_cnt {
@@ -217,8 +230,7 @@ html, body {
 	-moz-border-radius:6px;
 	-webkit-border-radius:6px;
 	color: #f47600;
-	behavior: url(ie-css3.htc);
-	behavior: url(border-radius.htc);
+	
 }
 
 textarea {
@@ -226,10 +238,14 @@ textarea {
 	height: 80px;
 	border: 0px;
 	margin: 10px 0;
-	background: -moz-linear-gradient(#f5f5f5, #f9f9f9);
-	background: -ms-linear-gradient(#f5f5f5, #f9f9f9);
-	background: -o-linear-gradient(#f5f5f5, #f9f9f9);
-	background: -webkit-linear-gradient(#f5f5f5, #f9f9f9);
+	
+	background: #f5f5f5;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f5f5f5', endColorstr='#f9f9f9');
+	background: -webkit-linear-gradient(#f5f5f5, #f9f9f9); 
+	background: -moz-linear-gradient(top,  #f5f5f5,  #f9f9f9);  
+	background: -o-linear-gradient(top,  #f5f5f5,  #f9f9f9); 
+	background: -ms-linear-gradient(top,  #f5f5f5,  #f9f9f9);
+	
 	box-shadow: 0px 1px 4px rgba(0,0,0,0.3) inset;
 	-moz-box-shadow: 0px 1px 4px rgba(0,0,0,0.3) inset;
     -webkit-box-shadow: 0px 1px 4px rgba(0,0,0,0.3) inset;
@@ -268,31 +284,33 @@ textarea {
     -moz-border-radius: 3px;
     -khtml-border-radius: 3px;
     -webkit-border-radius: 3px;
+
+	-khtml-border-radius:3px;
+ 	behavior: url(border-radius.htc);
     
     text-shadow: 0px -1px 1px rgba(0,0,0,0.25);
 
-    background: -moz-linear-gradient(#8996ab, #5e6f8d);
-	background: -ms-linear-gradient(#8996ab, #5e6f8d);
-	background: -o-linear-gradient(#8996ab, #5e6f8d);
-	background: -webkit-linear-gradient(#8996ab, #5e6f8d);
-	
-	behavior: url(ie-css3.htc);
-	behavior: url(border-radius.htc);
+   	background: #8996ab;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#8996ab', endColorstr='#5e6f8d');
+	background: -webkit-linear-gradient(#8996ab, #5e6f8d); 
+	background: -moz-linear-gradient(top,  #8996ab,  #5e6f8d);  
+	background: -o-linear-gradient(top,  #8996ab,  #5e6f8d); 
+	background: -ms-linear-gradient(top,  #8996ab,  #5e6f8d);
     
 }
 
-.button_blue button:hover {
-	background: -moz-linear-gradient(#99a6bc, #5e6f8d);
-	background: -ms-linear-gradient(#99a6bc, #5e6f8d);
-	background: -o-linear-gradient(#99a6bc, #5e6f8d);
-	background: -webkit-linear-gradient(#99a6bc, #5e6f8d);
+.button_blue button:hover, .button_blue button:active {
+	
+	background: #99a6bc;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#99a6bc', endColorstr='#5e6f8d');
+	background: -webkit-linear-gradient(#99a6bc, #5e6f8d); 
+	background: -moz-linear-gradient(top,  #99a6bc,  #5e6f8d);  
+	background: -o-linear-gradient(top,  #99a6bc,  #5e6f8d); 
+	background: -ms-linear-gradient(top,  #99a6bc,  #5e6f8d);
+
 }
 
 .button_blue button:active {
-	background: -moz-linear-gradient(#99a6bc, #5e6f8d);
-	background: -ms-linear-gradient(#99a6bc, #5e6f8d);
-	background: -o-linear-gradient(#99a6bc, #5e6f8d);
-	background: -webkit-linear-gradient(#99a6bc, #5e6f8d);
 	text-shadow: 0px 0px 1px rgba(0,0,0,0.8);
 }
 
@@ -311,8 +329,7 @@ textarea {
 	border-radius: 4px;
 	-webkit-box-shadow: 0 1px 3px rgba(0,0,0,.19);
 	height: 75px;
-	behavior: url(ie-css3.htc);
-	behavior: url(border-radius.htc);
+	
 }
 
 .tooltip::before {
@@ -409,6 +426,7 @@ textarea {
 
 .message .drop img {
 	margin-top: 4px;
+	visibility: hidden;
 }
 
 .message .user_name a {
@@ -426,4 +444,75 @@ textarea {
 
 #self_login {
 	display: none;
+}
+
+#modal {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	background: url(../img/dx04.png);
+	z-index: 1000;
+	margin-top: 103px;
+	display: none;
+}
+
+#modal .box {
+	margin: 0px auto; 
+	margin-top: 215px; 
+	padding: 5px; 
+	background: url(../img/dx06.png);	
+}
+
+#modal .box.votes {
+	width: 376px; 
+	height: 90px;
+}
+
+#modal .box.votes .main {
+	padding: 10px;
+	width: 356px; 
+	height: 70px;
+	position: relative;
+}
+
+
+#modal .box.votes .main .close {
+	position: absolute;
+	right: 5px;
+	top: 5px;
+	width: 11px;
+	height: 11px;
+	cursor: pointer;
+	background: url('../img/del.png');
+	opacity: 0.5;
+}
+
+#modal .box.votes .main .close:hover {
+	opacity: 1;
+}
+
+#modal .box .main {
+	background: #FFF;
+}
+
+#modal .box .main .stars {
+	margin-top: 10px;
+}
+
+#modal .box .main .stars .star {
+	background: url(../img/star_blue.png);
+	text-align: center;
+	font: bold 9pt Tahoma;
+	color: white;
+	cursor: pointer;
+	padding-top: 14px;
+	height: 22px;
+	width: 34px;
+	padding-right: 1px;
+}
+
+#modal .box .main .stars .star:hover {
+	background: url(../img/star_hover.png);
+	color: #000;
 }
