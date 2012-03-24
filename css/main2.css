@@ -14,15 +14,21 @@ html, body {
 	width: 100%;
 	height: auto;
 	min-height: 100%;
+	-moz-user-select: none;
+	-khtml-user-select: none;
+	-webkit-user-select: none;
+	-o-user-select: none;
+	user-select: none;
 }
 
 #main {
 	margin: 0px auto;
 	width: 821px;
-	border: 1px solid #000;
+	border: 1px solid #CCC;
 	border-top: 0px;
 	border-bottom: 0px;
-	background: #FFF;
+	background: white;
+	box-shadow: 0px 0px 16px #DDE2ED;
 }
 
 #user_list {
@@ -32,9 +38,19 @@ html, body {
 	-moz-box-shadow: 0px 0px 16px #DDE2ED;
     -webkit-box-shadow: 0px 0px 16px #DDE2ED;
     box-shadow: 0px 0px 16px #DDE2ED;
+    /*
     overflow: hidden;
     position: fixed;
     top: 0px;
+    */
+	-moz-user-select: none;
+	-khtml-user-select: none;
+	-webkit-user-select: none;
+	-o-user-select: none;
+	user-select: none;
+	/*
+	z-index: 1;
+	*/
 }
 
 #user_list .user {
@@ -83,11 +99,9 @@ html, body {
 }
 
 #user_list img {
-	border-radius:4px;
-	-moz-border-radius:4px;
-	-webkit-border-radius:4px;
-	
-	behavior: url(ie-css3.htc);
+	border-radius:6px;
+	-moz-border-radius:6px;
+	-webkit-border-radius:6px;
 }
 
 #user_list .fl img {
@@ -122,6 +136,7 @@ html, body {
 	height: 170px;
 	padding: 10px 20px;
 	font-size: 8.25pt;
+	background: #FFF;
 }
 
 #chat .user_avatar img {
@@ -135,8 +150,6 @@ html, body {
 	border-radius:6px;
 	-moz-border-radius:6px;
 	-webkit-border-radius:6px;
-	
-	behavior: url(ie-css3.htc);
 }
 
 #chat .user_info, #chat .user_action {
@@ -153,7 +166,7 @@ html, body {
 	color: #1270b8;
 }
 
-#chat .user_action a, #chat .dialog_write a, .tooltip a {
+#chat .user_action a, #chat .dialog_write a, #chat .mark_text a, .tooltip a {
 	font-size: 9pt;
 	color: #1270b8;
 	text-decoration: none;
@@ -182,6 +195,7 @@ html, body {
 #chat .dialog_messages {
 	padding: 10px 0;
 	margin-top: 102px;
+	margin-bottom: 180px;
 }
 
 #chat .no_messages {
@@ -201,6 +215,23 @@ html, body {
     box-shadow: 0px 1px 5px rgba(0,0,0,0.4) inset;
     
     color: #FFF;
+}
+
+#user_list .expander {
+	background: #f0f0f0;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f7f7f7', endColorstr='#e9e9e9');
+	background: -webkit-linear-gradient(#f7f7f7, #e9e9e9); 
+	background: -moz-linear-gradient(top,  #f7f7f7,  #e9e9e9);  
+	background: -o-linear-gradient(top,  #f7f7f7,  #e9e9e9); 
+	background: -ms-linear-gradient(top,  #f7f7f7,  #e9e9e9);
+	/*
+	-moz-box-shadow: 0px 0px 1px rgba(0,0,0,1) inset;
+    -webkit-box-shadow: 0px 0px 1px rgba(0,0,0,1) inset;
+    box-shadow: 0px 0px 1px rgba(0,0,0,1) inset;
+    */
+    border-top: 1px solid #FFF;
+    border-bottom: 1px solid #9a9a9a;
+    color: #303030;
 }
 
 .new_msg_cnt {
@@ -238,14 +269,12 @@ textarea {
 	height: 80px;
 	border: 0px;
 	margin: 10px 0;
-	
 	background: #f5f5f5;
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f5f5f5', endColorstr='#f9f9f9');
 	background: -webkit-linear-gradient(#f5f5f5, #f9f9f9); 
 	background: -moz-linear-gradient(top,  #f5f5f5,  #f9f9f9);  
 	background: -o-linear-gradient(top,  #f5f5f5,  #f9f9f9); 
 	background: -ms-linear-gradient(top,  #f5f5f5,  #f9f9f9);
-	
 	box-shadow: 0px 1px 4px rgba(0,0,0,0.3) inset;
 	-moz-box-shadow: 0px 1px 4px rgba(0,0,0,0.3) inset;
     -webkit-box-shadow: 0px 1px 4px rgba(0,0,0,0.3) inset;
@@ -270,32 +299,27 @@ textarea {
 	border: 0px;
 	font-size: 9pt Tahoma;
 	color: #FFF;
-	
 	text-align: center;
   	border: 0;
-  
 	margin: 4px 0px;
 	cursor: pointer;
 	outline: none;
 	height: 29px;
 	width: 94px;
-	
 	border-radius: 3px;
     -moz-border-radius: 3px;
     -khtml-border-radius: 3px;
     -webkit-border-radius: 3px;
-
 	-khtml-border-radius:3px;
- 	behavior: url(border-radius.htc);
-    
     text-shadow: 0px -1px 1px rgba(0,0,0,0.25);
-
    	background: #8996ab;
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#8996ab', endColorstr='#5e6f8d');
 	background: -webkit-linear-gradient(#8996ab, #5e6f8d); 
 	background: -moz-linear-gradient(top,  #8996ab,  #5e6f8d);  
 	background: -o-linear-gradient(top,  #8996ab,  #5e6f8d); 
 	background: -ms-linear-gradient(top,  #8996ab,  #5e6f8d);
+	
+	
     
 }
 
@@ -394,7 +418,7 @@ textarea {
 
 
 .message {
-	background: #FFF;
+	background: transparent;
 }
 
 .message .fl {
@@ -447,14 +471,13 @@ textarea {
 }
 
 #modal {
-	position: absolute;
-	top: 0px;
-	left: 0px;
-	width: 100%;
+	position: fixed;
+	top: 103px;
+	width: 601px;
 	background: url(../img/dx04.png);
 	z-index: 1000;
-	margin-top: 103px;
 	display: none;
+	margin: 0px auto;
 }
 
 #modal .box {
@@ -462,6 +485,51 @@ textarea {
 	margin-top: 215px; 
 	padding: 5px; 
 	background: url(../img/dx06.png);	
+}
+
+#modal .box.del_message {
+	width: 306px;
+	height: 118px;
+}
+
+#modal .box.del_message .main {
+	padding: 0px;
+	height: 118px;
+	position: relative;
+}
+
+#modal .box.del_message .del {
+	color: #404040;
+	padding: 12px;
+}
+
+#modal .box.del_message .msg {
+	height: 39px;
+	color: #969696;
+	padding: 0 12px;
+}
+
+#modal .box.del_message .del_txt {
+	padding: 8px 12px;
+}
+
+#modal .box.del_message .bottom {
+	padding: 6px;
+	height: 29px;
+	position: relative;
+	background: #EFEFEF;
+}
+
+#modal .box.del_message a {
+	color: #969595;
+}
+
+#modal .box.del_message a:hover {
+	color: #737373;
+}
+
+#modal .box.del_message .bottom .button_blue button {
+	margin: 0px;
 }
 
 #modal .box.votes {
@@ -477,7 +545,7 @@ textarea {
 }
 
 
-#modal .box.votes .main .close {
+#modal .close {
 	position: absolute;
 	right: 5px;
 	top: 5px;
@@ -488,7 +556,7 @@ textarea {
 	opacity: 0.5;
 }
 
-#modal .box.votes .main .close:hover {
+#modal .close:hover {
 	opacity: 1;
 }
 
@@ -498,6 +566,7 @@ textarea {
 
 #modal .box .main .stars {
 	margin-top: 10px;
+	color: #969696;
 }
 
 #modal .box .main .stars .star {
@@ -515,4 +584,83 @@ textarea {
 #modal .box .main .stars .star:hover {
 	background: url(../img/star_hover.png);
 	color: #000;
+}
+
+.ndsp {
+	display: none;
+}
+
+
+.temp_dialog {
+	-moz-user-select: text;
+	-khtml-user-select: text;
+	-webkit-user-select: text;
+	-o-user-select: text;
+	user-select: text;
+}
+
+.msg .mark {
+	width: 56px;
+	height: 22px;
+	background: url(../img/star_big.png);
+	padding: 19px 0;
+	text-align: center;
+	font-weight: bold;
+	color: white;
+	text-shadow: 1px 0 3px rgba(0, 0, 0, 0.8);
+	font-size: 11pt;
+	font-family: Verdana;
+	padding-right: 4px;
+	margin: 5px;
+}
+
+.msg .mark.heart {
+	background: url(../img/heart.png);
+}
+
+.msg .mark.hearts {
+	background: url(../img/hearts.png);
+}
+
+.msg .mark_text {
+	height: 16px;
+	padding: 22px 0;
+	color: #a6a6a6;
+	margin: 5px;
+}
+
+.msg .mark_text.hearts {
+	padding: 10px 0;
+	height: 30px;
+}
+
+.msg_repost {
+	display: none;
+}
+
+#scroll_top, #scroll_bot {
+	position: fixed;
+	width: 220px;
+	height: 52px;
+	z-index: 10;
+}
+
+#scroll_top {
+	top: 0px;
+	background: url(http://cdn4.iconfinder.com/data/icons/cc_mono_icon_set/blacks/48x48/br_up.png) no-repeat;
+	background-position-x: 85px;
+	opacity: 0.1;
+}
+#scroll_bot {
+	bottom: 0px;
+	background: url(http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/48x48/br_down.png) no-repeat;
+	background-position-x: 85px;
+	opacity: 0.1;
+}
+
+#user_list_fix {
+	overflow: hidden;
+	position: fixed;
+	top: 0px;
+	height: 979px;
 }
